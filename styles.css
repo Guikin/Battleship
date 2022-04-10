@@ -23,12 +23,25 @@ body{
 }
 .playergrid,.computergrid{
     display: grid;
-    grid-template-columns: repeat(4,100px);
-    grid-template-rows:repeat(4,100px);
+    grid-template-columns: repeat(5,100px);
+    grid-template-rows:repeat(5,100px);
     margin: 30px;
     
 }
 .playergrid .square, .computergrid .square{
 border: solid black 1px;
 padding: 10px;
+}
+
+.ship1{
+    display: grid;
+    grid-template-columns: repeat(4,100px);
+    grid-template-rows: repeat(4,100px);
+}
+.ship1>div{
+    border: solid black 1px;
+}
+
+.highlight{
+    background-color: yellow;
 }
