@@ -1,6 +1,6 @@
 const ship =$(".ship");
 const playergrid=$(".playergrid");
-
+const body = document.body;
 
 let shipSelect="";
 let playerGrids=[]
@@ -123,51 +123,128 @@ const resetgrid = function(){
             //     squares[nextcube1].classList.add("highlight")
             //     squares[previouscube1].classList.add("highlight")
             //  }
+        }else if(shipSelect==="Destroyer"){
+
+            if(rotation===true){
+                nextcube1=cubeNum+6;
+                
+                previouscube1=cubeNum-6
+                previouscube2=cubeNum-12
+                
+                if(cubeNum !== undefined && squares[nextcube1] !== undefined  && squares[previouscube1] !== undefined && squares[previouscube2] !== undefined){
+                    
+   
+                   selectCube.classList.add("highlight")
+                   squares[nextcube1].classList.add("highlight")
+                   squares[previouscube1].classList.add("highlight")
+                   squares[previouscube2].classList.add("highlight")
+               }else{
+                   selectCube.classList.add("red")
+                   squares[nextcube1].classList.add("red")
+                   squares[previouscube1].classList.add("red")
+                   squares[previouscube2].classList.add("red")
+               };
+           }else{
+                nextcube1=cubeNum+1;
+                previouscube1=cubeNum-1
+                previouscube2=cubeNum-2
+                nextcube2=cubeNum+2;
+                if(cubeNum!==2 && cubeNum!==3 && cubeNum!==4 && cubeNum!==8 && cubeNum!==9 && cubeNum!==10 && cubeNum!==14 && cubeNum!==15 && cubeNum!==16 && cubeNum!==20 && cubeNum!==21 &&  cubeNum!==22 &&cubeNum!==26 && cubeNum!==27 && cubeNum!==28 && cubeNum!==32 && cubeNum!==33 && cubeNum!==34){
+                   selectCube.classList.add("red")
+                   squares[nextcube1].classList.add("red")
+                   squares[previouscube1].classList.add("red")
+                   squares[previouscube2].classList.remove("highlight")
+               }else{
+                   selectCube.classList.add("highlight")
+                   squares[nextcube1].classList.add("highlight")
+                   squares[previouscube1].classList.add("highlight")
+                   squares[previouscube2].classList.add("highlight")
+                   };
+               }
         }
     }})
 
-
-  playergrid.on("drop", function(event){
+   
+          
+    
+    playergrid.on("drop", function(event){
     // prevent default action (open as link for some elements)
     event.preventDefault();
     let selectCube=event.target;
     let cubeNum=parseInt(selectCube.classList[1])
-    if(event.target.parentElement.className == "playergrid"){
-        if(rotation===true){
-            nextcube1=cubeNum+6;
-            nextcube2=cubeNum+12;
-            previouscube1=cubeNum-6;
-            previouscube2=cubeNum-12;
+    if(event.target.parentElement.className === "playergrid"){
+        if(shipSelect==="Commander-Ship"){
+            if(rotation===true){
+                nextcube1=cubeNum+6;
+                nextcube2=cubeNum+12;
+                previouscube1=cubeNum-6;
+                previouscube2=cubeNum-12;
 
-            if(cubeNum !== undefined && squares[nextcube1] !== undefined && squares[nextcube2] !== undefined && squares[previouscube1] !== undefined && squares[previouscube2] !==undefined){
-             selectCube.style.backgroundColor = "blue";
-             squares[nextcube1].style.backgroundColor = "blue";
-             squares[nextcube2].style.backgroundColor = "blue";
-             squares[previouscube1].style.backgroundColor = "blue";
-             squares[previouscube2].style.backgroundColor = "blue";
-             console.log(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
-            }
-            
-        }else{
-             nextcube1=cubeNum+1;
-             nextcube2=cubeNum+2;
-             previouscube1=cubeNum-1;
-             previouscube2=cubeNum-2;
-             
-            if(cubeNum===2 || cubeNum===3 || cubeNum===8 || cubeNum===9 && cubeNum===14 || cubeNum===15 || cubeNum===20 || cubeNum===21 || cubeNum===26 || cubeNum===27 || cubeNum===32 || cubeNum===33)
-            {
+                if(cubeNum !== undefined && squares[nextcube1] !== undefined && squares[nextcube2] !== undefined && squares[previouscube1] !== undefined && squares[previouscube2] !==undefined){
                 selectCube.style.backgroundColor = "blue";
                 squares[nextcube1].style.backgroundColor = "blue";
                 squares[nextcube2].style.backgroundColor = "blue";
                 squares[previouscube1].style.backgroundColor = "blue";
                 squares[previouscube2].style.backgroundColor = "blue";
                 console.log(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
+                }
+                
+            }else{
+                nextcube1=cubeNum+1;
+                nextcube2=cubeNum+2;
+                previouscube1=cubeNum-1;
+                previouscube2=cubeNum-2;
+                
+                if(cubeNum===2 || cubeNum===3 || cubeNum===8 || cubeNum===9 && cubeNum===14 || cubeNum===15 || cubeNum===20 || cubeNum===21 || cubeNum===26 || cubeNum===27 || cubeNum===32 || cubeNum===33)
+                {
+                    selectCube.style.backgroundColor = "blue";
+                    squares[nextcube1].style.backgroundColor = "blue";
+                    squares[nextcube2].style.backgroundColor = "blue";
+                    squares[previouscube1].style.backgroundColor = "blue";
+                    squares[previouscube2].style.backgroundColor = "blue";
+                    console.log(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
+                }
+            }
+        // move dragged elem to the selected drop target
+        }else if(shipSelect==="Destroyer"){
+
+            if(rotation===true){
+                nextcube1=cubeNum+6;
+                
+                previouscube1=cubeNum-6
+                previouscube2=cubeNum-12
+                
+                if(cubeNum !== undefined && squares[nextcube1] !== undefined  && squares[previouscube1] !== undefined && squares[previouscube2] !== undefined){
+                        selectCube.style.backgroundColor = "blue";
+                        squares[nextcube1].style.backgroundColor = "blue";
+                        squares[previouscube1].style.backgroundColor = "blue";
+                        squares[previouscube2].style.backgroundColor = "blue";
+                        console.log(cubeNum,nextcube1,previouscube1,previouscube2);
+                        
+               }
+           }else{
+                nextcube1=cubeNum+1;
+                previouscube1=cubeNum-1
+                previouscube2=cubeNum-2
+                if(cubeNum===2 || cubeNum===3 || cubeNum===4 || cubeNum===8 || cubeNum===9 || cubeNum===10 || cubeNum===14 || cubeNum===15 || cubeNum===16 || cubeNum===20 || cubeNum===21 || cubeNum===22 ||cubeNum===26 || cubeNum===27 || cubeNum===28 || cubeNum===32 || cubeNum===33 || cubeNum===34){
+                    selectCube.style.backgroundColor = "blue";
+                    squares[nextcube1].style.backgroundColor = "blue";
+                    squares[previouscube1].style.backgroundColor = "blue";
+                    squares[previouscube2].style.backgroundColor = "blue";
+                    console.log(cubeNum,nextcube1,previouscube1,previouscube2);
+               }
             }
         }
-    // move dragged elem to the selected drop target
     }resetgrid()
-    
   });
+
+// If drop element is not on player-grid. It will reset red color to blank
+  $("body").on("drop", function(event){
+    let selectCube=event.target;
+    let cubeNum=parseInt(selectCube.classList[1])
+    if(event.target.parentElement.className !== "playergrid"){
+        resetgrid()
+  }})
 
  
 
