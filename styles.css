@@ -10,10 +10,19 @@ html{
 
 body{
     height: 100vh;
-    display: flex;
+    display:flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center
+}
+
+/* .GAME{
+    width: 80%;
+
+} */
+
+.title{
+    text-align: center;
 }
 
 .battleship-grid{
@@ -33,11 +42,34 @@ border: solid black 1px;
 padding: 10px;
 }
 
+.ship-container{
+    display: flex;
+}
+
+
+.ships{
+  display: flex;
+  margin:30px;
+  flex:1;
+}
+
 .ship{
     display: grid;
     grid-template-columns: 100px;
-    grid-template-rows: 100px;
+    grid-template-rows: repeat(5,100px);
 }
+
+.megaman{
+    flex:1;
+    margin: 30px;
+}
+.megaman button{
+    padding:30px;
+    font-size: 25px;
+    border-radius: 20px;
+    margin: 0px 35px;
+}
+
 .ship>div{
     border: solid black 1px;
 }
@@ -47,4 +79,9 @@ padding: 10px;
 }
 .red{
     background-color: red;
+}
+
+
+.Commander-Ship{
+    background-image:url(./commander.png);
 }

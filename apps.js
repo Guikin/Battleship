@@ -2,21 +2,25 @@ const ship =$(".ship");
 const playergrid=$(".playergrid");
 const computerGrid=$(".computergrid")
 const body = document.body;
+const message = document.querySelector(".message")
+let state="";
 
 let shipSelect="";
-let playerGrids=[]
-let computerGrids=[]
+let playerGrids=[];
+let computerGrids=[];
 let rotation=true;
 
 let playerCommander=[];
 let playerDestroyer=[];
 let playerBattalion=[];
 let playerCruiser=[];
+let playerDamage=[];
 
 let computerCommander=[];
 let computerDestroyer=[];
 let computerBattalion=[];
 let computerCruiser=[];
+let computerDamage=[];
 
 const generateGridPlayer= num =>{
     for(let i=0;i<num;i++){
@@ -57,9 +61,16 @@ document.addEventListener("dragover", function(event) {
   });
 
   $(".rotate").on("click",function(){
+
       if(rotation){
+          ship.css("grid-template-columns","repeat(5,100px)")
+          ship.css("grid-template-rows","100px")
+          $(".ships").css("display","inline")
           rotation=false;
       }else{
+          ship.css("grid-template-columns","100px")
+          ship.css("grid-template-rows","repeat(5,100px)")
+          $(".ships").css("display","flex")
           rotation=true
       }
       
@@ -231,7 +242,6 @@ const resetgrid = function(){
            }else{
                 nextcube1=cubeNum+1;
                 previouscube1=cubeNum-1
-                
                 
                 let noZones=[]
                 let count5=5;
@@ -479,6 +489,7 @@ $(".reset").on("click",function(){
 })
 
 
+
 // Generate CommanderShip
 function generateCommanderShip(){
     let computerRotate=true;
@@ -572,7 +583,7 @@ generateCommanderShip()
             computerSquares[previouscube2].style.backgroundColor = "pink";
            computerGrids.push(cubeNum,nextcube1,previouscube1,previouscube2);
            computerDestroyer.push(cubeNum,nextcube1,previouscube1,previouscube2);
-           console.log(computerGrids)
+           
         }else{
             generateDestroyer()
         }
@@ -665,7 +676,6 @@ generateCommanderShip()
         generateBattalion()
     }
    }
-
   }
  
   generateBattalion()
@@ -720,7 +730,136 @@ generateCommanderShip()
         generateCruiser()
     }
    }
-
   }
  
   generateCruiser()
+
+
+
+computerGrid.on("click",playerAttack);
+
+function playerAttack(event){
+    let targetCube=event.target;
+    if(state==="playerattack"){
+        if(computerDamage.includes(parseInt(targetCube.classList[1]))===false){
+    computerDamage.push(parseInt(targetCube.classList[1]))}
+    
+
+    if (computerGrids.includes(parseInt(targetCube.classList[1]))){
+        targetCube.style.backgroundColor="red";
+    }else{
+        targetCube.style.backgroundColor="green";
+    }
+
+    let checkCruiser = computerCruiser.every( cube => computerDamage.includes(cube))
+    let checkBattalion = computerBattalion.every( cube => computerDamage.includes(cube))
+    let checkDestroyer = computerDestroyer.every( cube => computerDamage.includes(cube))
+    let checkCommanderShip = computerCommander.every( cube => computerDamage.includes(cube))
+
+    if(checkCruiser){
+        message.innerText="You sunk an enemy Cruiser"; 
+    } 
+    if(checkBattalion){
+        message.innerHTML="You sunk an enemy Batallion";
+    }
+    if(checkDestroyer){
+        message.innerHTML="You sunk an enemy Destroyer";
+    }
+    if(checkCommanderShip){
+        message.innerHTML="You sunk an enemy Commander Ship";
+    };
+
+    if(checkCruiser && checkBattalion && checkDestroyer && checkCommanderShip ){
+        playerWins()
+    }
+ }
+    setTimeout(computerAttack,1000)
+}
+
+
+
+let lastHit=0
+    let hit
+    let possibleShip=[-1,1,6,-6];
+    function randomPossibility(){
+        return possibleShip[Math.floor(Math.random()*4)];
+    }
+    let attackCube=0;
+
+function computerAttack(){
+
+    let possAtk=[lastHit-1,lastHit+1,lastHit-6,lastHit+6]
+    console.log(" poss atk " + possAtk)
+    
+    let possAtkPositive =  possAtk.map(num=>Math.abs(num))
+    console.log(possAtkPositive)
+    
+
+    if(hit){
+        if(playerDamage.every(num => possAtkPositive.includes(num))){
+            attackCube= Math.floor(Math.random()*36)
+        }else{
+        attackCube=attackNext;
+        }
+    }else{
+        attackCube= Math.floor(Math.random()*36)
+    }
+
+    // console.log(attackCube)
+
+    if(attackCube !==undefined && attackCube > -1 && attackCube < 36 && playerDamage.includes(attackCube)===false){
+    playerDamage.push(attackCube)
+    }else{
+        attackNext=lastHit+randomPossibility();
+        computerAttack()
+    }
+
+    // If it hits a ship
+    if(playerGrids.includes(attackCube)){
+        squares[attackCube].style.backgroundColor="red";
+        hit=true
+        lastHit=attackCube;
+        attackNext=lastHit+randomPossibility();
+        // console.log("attack"+attackNext);
+
+    }else{
+        squares[attackCube].style.backgroundColor="green";
+        hit=false
+    }
+
+    // Display Messages
+    let checkCruiser = playerCruiser.every( cube => playerDamage.includes(cube))
+    let checkBattalion = playerBattalion.every( cube => playerDamage.includes(cube))
+    let checkDestroyer = playerDestroyer.every( cube => playerDamage.includes(cube))
+    let checkCommanderShip = playerCommander.every( cube => playerDamage.includes(cube))
+
+    if(checkCruiser){
+        message.innerHTML="Mavericks sunk your Cruiser"; 
+    } 
+    if(checkBattalion){
+        message.innerHTML="Mavericks sunk your Batallion";
+    }
+    if(checkDestroyer){
+        message.innerHTML="Mavericks sunk your Destroyer";
+    }
+    if(checkCommanderShip){
+        message.innerHTML="Mavericks sunk your Commander Ship";
+    };
+
+    if(checkCruiser && checkBattalion && checkDestroyer && checkCommanderShip ){
+        playerWins()
+    }
+
+    state="playerattack"
+}
+
+
+function playerWins(){
+    message.innerHTML="You Destroyed all enemy Ships.Congrats";
+}
+function ComputerWins(){
+    message.innerHTML="You Destroyed all enemy Ships.Congrats";
+}
+// if(state==="computerattack"){
+//     computerAttack();
+// }
