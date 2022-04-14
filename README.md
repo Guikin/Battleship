@@ -20,17 +20,17 @@
 
 ## Mega Space Battleship X
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+
 
 Mega space Battlehip X is a take on the the popular battleship game reconstructed from scratch with HTML, CSS, Javascript and Jquery in a spacey and respect to the Meagaman X Theme games. The game features drag and drop of ships on grids with ability to rotate or reset all ships, computer Ai and fancy sound effects when ships are hit or missed.
 
 ![](https://media.giphy.com/media/tniYJzpaXxfBRLJffU/giphy.gif)
 
-- [Link to Game]()
+- [Link to Game](https://guikin.github.io/Battleship/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-### Built With
+## Built With
 
 - [JQuery]
 - [HTML]
@@ -39,7 +39,7 @@ Mega space Battlehip X is a take on the the popular battleship game reconstructe
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-### How to play
+## How to play
 
 1. Drag and drop your ship on the "PlayerGrid" and press Play
 2. The game starts with the players turn so you can click on any grid in the "Maverick Zone"
