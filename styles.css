@@ -2,6 +2,7 @@
     margin:0;
     border:0;
     padding:0;
+    
 }
 
 html{
@@ -14,11 +15,12 @@ html{
 }
 
 body{
-    /* height: 100vh; */
+    height: 100vh;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transform: scale(0.6);
     
 }
 
@@ -32,14 +34,19 @@ body{
     border: 130px solid transparent;
     border-image: url(https://cdn.discordapp.com/attachments/963368879927730188/963647438860742707/megaman_border.png) 80 round;
     background-image: url(https://media.giphy.com/media/3Dgfoe0Xok4wu0T7hZ/giphy.gif);
-    background-size: 107% 111%;
+    background-size: 107% 109%;
     background-repeat: no-repeat;
     background-position: center;
+    zoom:90%;
 }
 
 .title{
     text-align: center;
-    color: white;
+    color: rgb(255, 255, 255);
+    padding-bottom: 60px;
+    font-size: 50px;
+    filter: drop-shadow(0 0 0.6rem rgba(255, 255, 255, 0.562));
+    
 }
 
 .battleship-grid{
@@ -47,6 +54,13 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.playercontainer , .computercontainer{
+    background-color: rgba(20, 20, 20, 0.651);
+    border-radius: 30px;
+    box-shadow: 0 0 0.75rem rgb(233, 233, 233) ;
+    margin: 30px;
 }
 .playergrid,.computergrid{
     
@@ -58,14 +72,20 @@ body{
 }
 .playergrid .square, .computergrid .square{
     
-border: solid rgb(255, 255, 255) 1px;
+border: solid rgba(255, 255, 255, 0.308) .5px;
 padding: 10px;
+background-size: contain;
+border-radius: 20px;
+z-index:2
+}
+
+.battleship-grid img{
+    z-index:0; 
 }
 
 .ship-container{
     display: flex;
 }
-
 
 .ships{
   display: flex;
@@ -95,23 +115,44 @@ padding: 10px;
     color: white;
 }
 
+.megaman button:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
 .ship>div{
-    border: solid white 1px;
+    border:.5px rgba(255, 255, 255, 0.466) dotted;
+    border-radius: 20px;
 }
 
 .highlight{
-    background-color: yellow;
+    background-color:rgba(0, 255, 200, 0.356)
 }
 .red{
-    background-color: red;
+    background-color:rgba(255, 0, 98, 0.356);
 }
 .message{
     color: white;
     margin: 30px;
+    padding: 30px;
+    border: rgb(255, 255, 255) solid 6px;
+    background-color: black;
+}
+.messagebox{
+display: flex;
+flex-direction: column;
+}
+.img-container{
+    align-self: flex-end;
 }
 
 img{
     z-index:1;
-    filter: drop-shadow(0 0 0.75rem crimson);
+    filter: drop-shadow(0 0 0.6rem rgba(255, 255, 255, 0.562));
+}
+
+.x{
+    font-size: 100px;
+    color: white;
 }
 
