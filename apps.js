@@ -1025,6 +1025,8 @@ function showShip(){
 $(".start").on("click",function(){
     if(playerGrids.length===14){
     state="playerattack";
+    message.innerHTML="";
+    
     $(".start").css("display","none")
     $(".rotate").css("display","none")
     $(".reset").css("display","none")
@@ -1054,5 +1056,7 @@ $(".start").on("click",function(){
     })
   }
  })
-
-document.querySelector("audio").volume=.1
+document.body.addEventListener("click",function(){
+    document.querySelector("audio").play()
+})
+document.querySelector("audio").volume=.3

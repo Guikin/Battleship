@@ -20,7 +20,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transform: scale(0.6);
+    transform: scale(0.55);
     
 }
 
@@ -37,16 +37,19 @@ body{
     background-size: 107% 109%;
     background-repeat: no-repeat;
     background-position: center;
-    zoom:90%;
+    zoom:93%;
 }
 
-.title{
+.title,.heading{
     text-align: center;
     color: rgb(255, 255, 255);
     padding-bottom: 60px;
     font-size: 50px;
     filter: drop-shadow(0 0 0.6rem rgba(255, 255, 255, 0.562));
-    
+}
+.heading{
+font-size: 30px;
+padding: 20px;
 }
 
 .battleship-grid{
@@ -137,6 +140,7 @@ z-index:2
     padding: 30px;
     border: rgb(255, 255, 255) solid 6px;
     background-color: black;
+    font-size: 1.5rem;
 }
 .messagebox{
 display: flex;
@@ -155,4 +159,6 @@ img{
     font-size: 100px;
     color: white;
 }
-
+audio{
+    margin-top: 50px;
+}
