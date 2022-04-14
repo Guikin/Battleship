@@ -5,6 +5,8 @@ const body = document.body;
 const message = document.querySelector(".message")
 let state="";
 
+
+
 let shipSelect="";
 let playerGrids=[];
 let computerGrids=[];
@@ -48,7 +50,7 @@ ship.on("dragstart", function(event) {
     // store a ref. on the dragged elem
     dragged = event.target;
     // make it half transparent
-    event.target.style.opacity = .5;
+    // event.target.style.opacity = .5;
     shipSelect=event.target.classList[2]
   });
 
@@ -63,14 +65,22 @@ document.addEventListener("dragover", function(event) {
   $(".rotate").on("click",function(){
 
       if(rotation){
-          ship.css("grid-template-columns","repeat(5,100px)")
-          ship.css("grid-template-rows","100px")
+          ship.css("grid-template-columns","repeat(5,120px)")
+          ship.css("grid-template-rows","120px")
           $(".ships").css("display","inline")
+          $(".Commander-Ship img").attr("src","https://cdn.discordapp.com/attachments/963368879927730188/963687046294143006/new_commander-ship.png")
+          $(".Destroyer img").attr("src","https://cdn.discordapp.com/attachments/963368879927730188/963677484606423100/commander-Recovered.png")
+          $(".Battalion img").attr("src","https://cdn.discordapp.com/attachments/963368879927730188/963695117854732359/battalion_clk.png")
+          $(".Cruiser img").attr("src","https://cdn.discordapp.com/attachments/963368879927730188/963699935344205865/Cruise_ship_rotate.png")
           rotation=false;
       }else{
-          ship.css("grid-template-columns","100px")
-          ship.css("grid-template-rows","repeat(5,100px)")
+          ship.css("grid-template-columns","120px")
+          ship.css("grid-template-rows","repeat(5,120px)")
           $(".ships").css("display","flex")
+          $(".Commander-Ship img").attr("src","https://cdn.discordapp.com/attachments/963368879927730188/963707144937566218/new_commander_ship.png")
+          $(".Destroyer img").attr("src","https://cdn.discordapp.com/attachments/963368879927730188/963368947766398996/commander_2.png")
+          $(".Battalion img").attr("src","https://cdn.discordapp.com/attachments/963368879927730188/963691108058148955/battalion.png")
+          $(".Cruiser img").attr("src","https://cdn.discordapp.com/attachments/963368879927730188/963699265379659776/Cruiser.png") 
           rotation=true
       }
       
@@ -78,10 +88,42 @@ document.addEventListener("dragover", function(event) {
     
 const resetgrid = function(){
     for(let i=0 ; i<36; i++){
-        squares[i].classList.remove("highlight");;
-        squares[i].classList.remove("red");;
+        squares[i].classList.remove("highlight");
+        squares[i].classList.remove("red");
     }
   } 
+
+  const playerReset = function(){
+    playerGrids=[];
+    playerDamage=[]
+    for(let i=0 ; i<36; i++){
+        squares[i].classList.remove("highlight");
+        squares[i].classList.remove("red");
+        squares[i].style.backgroundColor="";
+        squares[i].innerHTML="";
+    }
+    for(each of ship){
+        each.style.opacity=1;
+        each.setAttribute("draggable","true")
+    }
+
+  }
+
+  const computerReset = function(){
+      computerGrids=[];
+      computerDamage=[];
+      computerCommander=[];
+      computerDestroyer=[];
+      computerBattalion=[];
+      computerCruiser=[];
+
+    for(let i=0 ; i<36; i++){
+        computerSquares[i].classList.remove("highlight");
+        computerSquares[i].classList.remove("red");
+        computerSquares[i].style.backgroundColor="";
+        computerSquares[i].innerHTML="";
+    }
+  }
 
 // playergrid.on("dragleave", function(event) {
 //     // reset background of potential drop target when the draggable element leaves it
@@ -117,7 +159,7 @@ const resetgrid = function(){
              previouscube1=cubeNum-6
              previouscube2=cubeNum-12
              
-             if((cubeNum !== undefined && squares[nextcube1] !== undefined && squares[nextcube2] !== undefined && squares[previouscube1] !== undefined && squares[previouscube2] !== undefined)){
+             if((cubeNum !== undefined && squares[nextcube1] !== undefined && squares[nextcube2] !== undefined && squares[previouscube1] !== undefined && squares[previouscube2] !== undefined && playerGrids.includes(cubeNum)===false && playerGrids.includes(nextcube1)===false && playerGrids.includes(nextcube2)===false && playerGrids.includes(previouscube1)===false && playerGrids.includes(previouscube2)===false && playerGrids.includes(cubeNum)===false)){
 
                 selectCube.classList.add("highlight");
                 squares[nextcube1].classList.add("highlight");
@@ -148,15 +190,15 @@ const resetgrid = function(){
                      count3+=6;  
                     }
 
-                if(noZones.includes(cubeNum)===false)
+                if(noZones.includes(cubeNum)===false || playerGrids.includes(cubeNum) || playerGrids.includes(nextcube1) || playerGrids.includes(nextcube2) || playerGrids.includes(previouscube1) || playerGrids.includes(previouscube2 || playerGrids.includes(cubeNum)===false))
              
             //  if(cubeNum!==2 && cubeNum!==3 && cubeNum!==8 && cubeNum!==9 && cubeNum!==14 && cubeNum!==15 && cubeNum!==20 && cubeNum!==21 && cubeNum!==26 && cubeNum!==27 && cubeNum!==32 && cubeNum!==33)
             {
                 selectCube.classList.add("red");
                 squares[nextcube1].classList.add("red");
-                squares[nextcube2].classList.remove("highlight");
+                squares[nextcube2].classList.add("red");
                 squares[previouscube1].classList.add("red");
-                squares[previouscube2].classList.remove("highlight");
+                squares[previouscube2].classList.add("red");
             }else{
                 selectCube.classList.add("highlight");
                 squares[nextcube1].classList.add("highlight");
@@ -177,7 +219,7 @@ const resetgrid = function(){
                 previouscube1=cubeNum-6
                 previouscube2=cubeNum-12
                 
-                if(cubeNum !== undefined && squares[nextcube1] !== undefined  && squares[previouscube1] !== undefined && squares[previouscube2] !== undefined){
+                if(cubeNum !== undefined && squares[nextcube1] !== undefined  && squares[previouscube1] !== undefined && squares[previouscube2] !== undefined && playerGrids.includes(cubeNum)===false && playerGrids.includes(nextcube1)===false && playerGrids.includes(previouscube1)===false && playerGrids.includes(previouscube2)===false){
                     
    
                    selectCube.classList.add("highlight");
@@ -209,7 +251,7 @@ const resetgrid = function(){
                      count4+=6;
                     }
 
-                if(noZones.includes(cubeNum)===false){
+                if(noZones.includes(cubeNum)===false || playerGrids.includes(cubeNum) || playerGrids.includes(nextcube1) || playerGrids.includes(previouscube1) || playerGrids.includes(previouscube2)){
                    selectCube.classList.add("red");
                    squares[nextcube1].classList.add("red");
                    squares[previouscube1].classList.add("red");
@@ -230,7 +272,7 @@ const resetgrid = function(){
                 nextcube1=cubeNum+6;  
                 previouscube1=cubeNum-6;
 
-                if(cubeNum !== undefined && squares[nextcube1] !== undefined  && squares[previouscube1] !== undefined){
+                if(cubeNum !== undefined && squares[nextcube1] !== undefined  && squares[previouscube1] !== undefined && playerGrids.includes(cubeNum)===false && playerGrids.includes(nextcube1)===false && playerGrids.includes(previouscube1)===false){
                    selectCube.classList.add("highlight");
                    squares[nextcube1].classList.add("highlight");
                    squares[previouscube1].classList.add("highlight");
@@ -262,13 +304,16 @@ const resetgrid = function(){
                    squares[previouscube1].classList.add("highlight");
                    };
                }
+
+
+            //    End of Battalion
         }else if(shipSelect==="Cruiser"){
 
             if(rotation===true){
                 nextcube1=cubeNum+6;  
                  
 
-                if(cubeNum !== undefined && squares[nextcube1] !== undefined  && squares && playerGrids.includes(cubeNum)===false && playerGrids.includes(nextcube1)===false){
+                if(cubeNum !== undefined && squares[nextcube1] !== undefined  && playerGrids.includes(cubeNum)===false && playerGrids.includes(nextcube1)===false){
                    selectCube.classList.add("highlight");
                    squares[nextcube1].classList.add("highlight");
                    
@@ -288,7 +333,7 @@ const resetgrid = function(){
                      count5+=6;
                         
                 }
-                if(noZones.includes(cubeNum)){
+                if(noZones.includes(cubeNum) || playerGrids.includes(cubeNum) || playerGrids.includes(nextcube1)){
                    selectCube.classList.add("red");
                    squares[nextcube1].classList.add("red");
                    
@@ -325,6 +370,9 @@ const resetgrid = function(){
                 squares[previouscube2].style.backgroundColor = "blue";
                 playerGrids.push(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
                 playerCommander.push(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2)
+                $(".Commander-Ship").attr("draggable",false)
+                $(".Commander-Ship").css("opacity","0.5")
+                squares[previouscube2].innerHTML='<img src="https://cdn.discordapp.com/attachments/963368879927730188/963707144937566218/new_commander_ship.png" draggable="false" alt=""></img>'
                 }
                 
             }else{
@@ -352,6 +400,9 @@ const resetgrid = function(){
                     squares[previouscube2].style.backgroundColor = "blue";
                     playerGrids.push(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
                     playerCommander.push(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
+                    $(".Commander-Ship").attr("draggable",false)
+                    $(".Commander-Ship").css("opacity","0.5")
+                    squares[previouscube2].innerHTML='<img src="https://cdn.discordapp.com/attachments/963368879927730188/963687046294143006/new_commander-ship.png" draggable="false" alt=""></img>'
                 }
             }
         
@@ -371,6 +422,9 @@ const resetgrid = function(){
                         squares[previouscube2].style.backgroundColor = "pink";
                        playerGrids.push(cubeNum,nextcube1,previouscube1,previouscube2);
                        playerDestroyer.push(cubeNum,nextcube1,previouscube1,previouscube2);
+                       $(".Destroyer").attr("draggable",false)
+                       $(".Destroyer").css("opacity","0.5")
+                       squares[previouscube2].innerHTML='<img src="https://cdn.discordapp.com/attachments/963368879927730188/963368947766398996/commander_2.png" draggable="false" alt=""></img>'
                }
            }else{
                 nextcube1=cubeNum+1;
@@ -398,6 +452,9 @@ const resetgrid = function(){
                     squares[previouscube2].style.backgroundColor = "pink";
                     playerGrids.push(cubeNum,nextcube1,previouscube1,previouscube2);
                     playerDestroyer.push(cubeNum,nextcube1,previouscube1,previouscube2);
+                    $(".Destroyer").attr("draggable",false)
+                    $(".Destroyer").css("opacity","0.5")
+                    squares[previouscube2].innerHTML='<img src="https://cdn.discordapp.com/attachments/963368879927730188/963677484606423100/commander-Recovered.png" draggable="false" alt=""></img>'
                }
             }
 
@@ -414,6 +471,9 @@ const resetgrid = function(){
                     squares[previouscube1].style.backgroundColor = "turquoise";
                     playerGrids.push(cubeNum,nextcube1,previouscube1);
                     playerBattalion.push(cubeNum,nextcube1,previouscube1);
+                    $(".Battalion").attr("draggable",false)
+                    $(".Battalion").css("opacity","0.5")
+                    squares[previouscube1].innerHTML='<img src="https://cdn.discordapp.com/attachments/963368879927730188/963691108058148955/battalion.png" draggable="false" alt=""></img>'
                }
            }else{
                 nextcube1=cubeNum+1;
@@ -434,6 +494,9 @@ const resetgrid = function(){
                     squares[previouscube1].style.backgroundColor = "turquoise";
                     playerGrids.push(cubeNum,nextcube1,previouscube1);
                     playerBattalion.push(cubeNum,nextcube1,previouscube1);
+                    $(".Battalion").attr("draggable",false)
+                    $(".Battalion").css("opacity","0.5")
+                    squares[previouscube1].innerHTML='<img src="https://cdn.discordapp.com/attachments/963368879927730188/963695117854732359/battalion_clk.png" draggable="false" alt=""></img>'
                 }
             }
 
@@ -443,11 +506,14 @@ const resetgrid = function(){
             if(rotation===true){
                 nextcube1=cubeNum+6;
                 if(cubeNum !== undefined && squares[nextcube1] !== undefined && playerGrids.includes(cubeNum)===false && playerGrids.includes(nextcube1)===false){
-                    
                     selectCube.style.backgroundColor = "purple";
                     squares[nextcube1].style.backgroundColor = "purple";
                     playerGrids.push(cubeNum,nextcube1);
                     playerCruiser.push(cubeNum,nextcube1);
+                    $(".Cruiser").attr("draggable",false)
+                    $(".Cruiser").css("opacity","0.5")
+                    squares[cubeNum].innerHTML='<img src="https://cdn.discordapp.com/attachments/963368879927730188/963699265379659776/Cruiser.png" draggable="false" alt=""></img>'
+  
                }
            }else{
                 nextcube1=cubeNum+1;
@@ -464,6 +530,9 @@ const resetgrid = function(){
                     squares[nextcube1].style.backgroundColor = "purple";
                     playerGrids.push(cubeNum,nextcube1);
                     playerCruiser.push(cubeNum,nextcube1);
+                    $(".Cruiser").attr("draggable",false)
+                    $(".Cruiser").css("opacity","0.5")
+                    squares[cubeNum].innerHTML='<img src="https://cdn.discordapp.com/attachments/963368879927730188/963699935344205865/Cruise_ship_rotate.png" draggable="false" alt=""></img>'
                 }
             }
         }resetgrid()
@@ -480,13 +549,9 @@ const resetgrid = function(){
 
  
 $(".reset").on("click",function(){
-    playerGrids=[];
-    for(let i=0 ; i<36; i++){
-        squares[i].classList.remove("highlight");
-        squares[i].classList.remove("red");
-        squares[i].style.backgroundColor="";
-    }
-})
+    playerReset()
+}
+)
 
 
 
@@ -518,6 +583,8 @@ function generateCommanderShip(){
         computerSquares[previouscube2].style.backgroundColor = "blue";
         computerGrids.push(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
         computerCommander.push(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
+        computerSquares[previouscube2].innerHTML='<img class="comCommander" src="https://cdn.discordapp.com/attachments/963368879927730188/963707144937566218/new_commander_ship.png" draggable="false" alt=""></img>'
+        
         }else{
             generateCommanderShip()
         }
@@ -547,6 +614,8 @@ function generateCommanderShip(){
             computerSquares[previouscube2].style.backgroundColor = "blue";
             computerGrids.push(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
             computerCommander.push(cubeNum,nextcube1,nextcube2,previouscube1,previouscube2);
+            computerSquares[previouscube2].innerHTML='<img class="comCommander" src="https://cdn.discordapp.com/attachments/963368879927730188/963687046294143006/new_commander-ship.png" draggable="false" alt=""></img>'
+            
             return
         }else{
             generateCommanderShip()
@@ -583,6 +652,7 @@ generateCommanderShip()
             computerSquares[previouscube2].style.backgroundColor = "pink";
            computerGrids.push(cubeNum,nextcube1,previouscube1,previouscube2);
            computerDestroyer.push(cubeNum,nextcube1,previouscube1,previouscube2);
+           computerSquares[previouscube2].innerHTML='<img class="comDestroyer" src="https://cdn.discordapp.com/attachments/963368879927730188/963368947766398996/commander_2.png" draggable="false" alt=""></img>'
            
         }else{
             generateDestroyer()
@@ -613,6 +683,7 @@ generateCommanderShip()
         computerSquares[previouscube2].style.backgroundColor = "pink";
         computerGrids.push(cubeNum,nextcube1,previouscube1,previouscube2);
         computerDestroyer.push(cubeNum,nextcube1,previouscube1,previouscube2);
+        computerSquares[previouscube2].innerHTML='<img class="comDestroyer" src="https://cdn.discordapp.com/attachments/963368879927730188/963677484606423100/commander-Recovered.png" draggable="false" alt=""></img>'
      }else{
          generateDestroyer()
      }
@@ -646,6 +717,7 @@ generateCommanderShip()
            computerSquares[previouscube1].style.backgroundColor = "turquoise";
           computerGrids.push(cubeNum,nextcube1,previouscube1);
           computerBattalion.push(cubeNum,nextcube1,previouscube1);
+          computerSquares[previouscube1].innerHTML='<img class="comBattalion" src="https://cdn.discordapp.com/attachments/963368879927730188/963691108058148955/battalion.png" draggable="false" alt=""></img>'
 
        }else{
            generateBattalion()
@@ -672,6 +744,7 @@ generateCommanderShip()
        computerSquares[previouscube1].style.backgroundColor = "turquoise";
        computerGrids.push(cubeNum,nextcube1,previouscube1);
        computerBattalion.push(cubeNum,nextcube1,previouscube1);
+       computerSquares[previouscube1].innerHTML='<img class="comBattalion" src="https://cdn.discordapp.com/attachments/963368879927730188/963695117854732359/battalion_clk.png" draggable="false" alt=""></img>'
     }else{
         generateBattalion()
     }
@@ -704,6 +777,7 @@ generateCommanderShip()
            computerSquares[nextcube1].style.backgroundColor = "purple";
           computerGrids.push(cubeNum,nextcube1);
           computerCruiser.push(cubeNum,nextcube1);
+          computerSquares[cubeNum].innerHTML='<img class="comCruiser" src="https://cdn.discordapp.com/attachments/963368879927730188/963699265379659776/Cruiser.png" draggable="false" alt=""></img>'
           
        }else{
            generateCruiser()
@@ -726,6 +800,7 @@ generateCommanderShip()
        computerSquares[nextcube1].style.backgroundColor = "purple";
        computerGrids.push(cubeNum,nextcube1);
        computerCruiser.push(cubeNum,nextcube1);
+       computerSquares[cubeNum].innerHTML='<img class="comCruiser" src="https://cdn.discordapp.com/attachments/963368879927730188/963699935344205865/Cruise_ship_rotate.png" draggable="false" alt=""></img>'
     }else{
         generateCruiser()
     }
@@ -734,7 +809,9 @@ generateCommanderShip()
  
   generateCruiser()
 
+  hideShip()
 
+//   GAME START
 
 computerGrid.on("click",playerAttack);
 
@@ -742,76 +819,107 @@ function playerAttack(event){
     let targetCube=event.target;
     if(state==="playerattack"){
         if(computerDamage.includes(parseInt(targetCube.classList[1]))===false){
-    computerDamage.push(parseInt(targetCube.classList[1]))}
+            computerDamage.push(parseInt(targetCube.classList[1]))
+
+            if (computerGrids.includes(parseInt(targetCube.classList[1]))){
+                    targetCube.style.backgroundColor="red";
+                    message.innerText="";
+                }else{
+                    targetCube.style.backgroundColor="green";
+                    message.innerText="";
+                }
+
+                let checkCruiser = computerCruiser.every( cube => computerDamage.includes(cube))
+                let checkBattalion = computerBattalion.every( cube => computerDamage.includes(cube))
+                let checkDestroyer = computerDestroyer.every( cube => computerDamage.includes(cube))
+                let checkCommanderShip = computerCommander.every( cube => computerDamage.includes(cube))
+
+                if(checkCruiser){
+                    message.innerText="You sunk an enemy Cruiser"; 
+                    $(".computergrid .comCruiser").css("display","inline")
+                } 
+                if(checkBattalion){
+                    message.innerHTML="You sunk an enemy Batallion";
+                    $(".computergrid .comBattalion").css("display","inline")
+                }
+                if(checkDestroyer){
+                    message.innerHTML="You sunk an enemy Destroyer";
+                    $(".computergrid .comDestroyer").css("display","inline")
+                }
+                if(checkCommanderShip){
+                    message.innerHTML="You sunk an enemy Commander Ship";
+                    $(".computergrid .comCommander").css("display","inline")
+                };
+
+                if(checkCruiser && checkBattalion && checkDestroyer && checkCommanderShip ){
+                    playerWins()
+                }else{
+                    state="computerattack"
+                setTimeout(computerAttack,1000)
+                }
+                
+      }
+    }
+
     
-
-    if (computerGrids.includes(parseInt(targetCube.classList[1]))){
-        targetCube.style.backgroundColor="red";
-    }else{
-        targetCube.style.backgroundColor="green";
-    }
-
-    let checkCruiser = computerCruiser.every( cube => computerDamage.includes(cube))
-    let checkBattalion = computerBattalion.every( cube => computerDamage.includes(cube))
-    let checkDestroyer = computerDestroyer.every( cube => computerDamage.includes(cube))
-    let checkCommanderShip = computerCommander.every( cube => computerDamage.includes(cube))
-
-    if(checkCruiser){
-        message.innerText="You sunk an enemy Cruiser"; 
-    } 
-    if(checkBattalion){
-        message.innerHTML="You sunk an enemy Batallion";
-    }
-    if(checkDestroyer){
-        message.innerHTML="You sunk an enemy Destroyer";
-    }
-    if(checkCommanderShip){
-        message.innerHTML="You sunk an enemy Commander Ship";
-    };
-
-    if(checkCruiser && checkBattalion && checkDestroyer && checkCommanderShip ){
-        playerWins()
-    }
  }
-    setTimeout(computerAttack,1000)
-}
-
+    
 
 
 let lastHit=0
     let hit
     let possibleShip=[-1,1,6,-6];
+    let lastHitPoss
     function randomPossibility(){
         return possibleShip[Math.floor(Math.random()*4)];
     }
     let attackCube=0;
 
-function computerAttack(){
 
+function computerAttack(){
+    if(state!=="GameOver"){
+        // checks for last hit
+
+
+         if(lastHitPoss!==undefined && lastHitPoss.every(num => playerDamage.includes(num))===false){
+             console.log("last hit has valid poss");
+             attackNext=lastHit+randomPossibility();
+
+             if(attackNext >-1 && attackNext < 36){
+             hit=true;
+
+            }else{
+                console.log("last hit but no more values")
+                hit=false;
+            }
+        }
+        
     let possAtk=[lastHit-1,lastHit+1,lastHit-6,lastHit+6]
-    console.log(" poss atk " + possAtk)
+    console.log("poss atk" + possAtk)
     
-    let possAtkPositive =  possAtk.map(num=>Math.abs(num))
+    let possAtkPositive = possAtk.map(num=>Math.abs(num))
     console.log(possAtkPositive)
     
-
+    
     if(hit){
-        if(playerDamage.every(num => possAtkPositive.includes(num))){
+        if(possAtkPositive.every(num => playerDamage.includes(num))===true){
+            console.log("true again")
             attackCube= Math.floor(Math.random()*36)
         }else{
         attackCube=attackNext;
         }
     }else{
+        console.log("missed and no other values left")
         attackCube= Math.floor(Math.random()*36)
     }
 
-    // console.log(attackCube)
+
 
     if(attackCube !==undefined && attackCube > -1 && attackCube < 36 && playerDamage.includes(attackCube)===false){
     playerDamage.push(attackCube)
     }else{
         attackNext=lastHit+randomPossibility();
-        computerAttack()
+        computerAttack();
     }
 
     // If it hits a ship
@@ -823,6 +931,7 @@ function computerAttack(){
         // console.log("attack"+attackNext);
 
     }else{
+        lastHitPoss=[...possAtkPositive];
         squares[attackCube].style.backgroundColor="green";
         hit=false
     }
@@ -847,19 +956,70 @@ function computerAttack(){
     };
 
     if(checkCruiser && checkBattalion && checkDestroyer && checkCommanderShip ){
-        playerWins()
+        ComputerWins()
+    }else{
+        state="playerattack"}
     }
-
-    state="playerattack"
+ 
 }
 
 
 function playerWins(){
     message.innerHTML="You Destroyed all enemy Ships.Congrats";
+    state="GameOver";
 }
 function ComputerWins(){
-    message.innerHTML="You Destroyed all enemy Ships.Congrats";
+    message.innerHTML="All your ships were destroyed. you lost";
+    state="GameOver";
 }
+
+function hideShip(){
+    $(".computergrid img").css("display","none")
+    for(let i=0 ; i<36; i++){
+        computerSquares[i].classList.remove("highlight");
+        computerSquares[i].classList.remove("red");
+        // computerSquares[i].style.backgroundColor="";
+    }
+}
+
+hideShip()
 // if(state==="computerattack"){
 //     computerAttack();
 // }
+function showShip(){
+    $(".computergrid img").css("display","inline")
+}
+
+$(".start").on("click",function(){
+    if(playerGrids.length===14){
+    state="playerattack";
+    $(".start").css("display","none")
+    $(".rotate").css("display","none")
+    $(".reset").css("display","none")
+    $(".megaman").prepend('<button class="endGame">EndGame</button>');
+
+    $(".endGame").on("click",function(){
+    state="GameOver";
+    message.innerHTML="Game was ended"
+    $(".megaman").prepend('<button class="restart">Restart</button>');
+
+    $(".restart").on("click",function(){
+        state="";
+        message.innerHTML="This Time we'll get them for sure";
+    $(".endGame").css("display","none")
+    $(".restart").css("display","none")
+    $(".start").css("display","inline")
+    $(".rotate").css("display","inline")
+    $(".reset").css("display","inline")
+     playerReset()
+     computerReset()
+     generateCommanderShip()
+     generateBattalion()
+     generateDestroyer()
+     generateCruiser()
+     hideShip()
+    })
+    })
+  }
+ })
+

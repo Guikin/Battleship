@@ -6,39 +6,59 @@
 
 html{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-image: url(https://media.giphy.com/media/7YNK0FBr7Qy8A37HnU/giphy.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Press Start 2P', cursive , sans-serif;
 }
 
 body{
-    height: 100vh;
+    /* height: 100vh; */
     display:flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center
+    align-items: center;
+    
 }
 
-/* .GAME{
-    width: 80%;
-
-} */
+.GAME{
+    border: 16px solid rgb(170, 15, 218);
+    padding: 50px;
+    border-radius: 16px;
+    /* background-image: url(https://cdn.discordapp.com/attachments/963368879927730188/963647438860742707/megaman_border.png);
+    background-repeat: no-repeat;
+    background-size: contain; */
+    border: 130px solid transparent;
+    border-image: url(https://cdn.discordapp.com/attachments/963368879927730188/963647438860742707/megaman_border.png) 80 round;
+    background-image: url(https://media.giphy.com/media/3Dgfoe0Xok4wu0T7hZ/giphy.gif);
+    background-size: 107% 111%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 .title{
     text-align: center;
+    color: white;
 }
 
 .battleship-grid{
+    
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .playergrid,.computergrid{
+    
     display: grid;
-    grid-template-columns: repeat(6,100px);
-    grid-template-rows:repeat(6,100px);
+    grid-template-columns: repeat(6,120px);
+    grid-template-rows:repeat(6,120px);
     margin: 30px;
     
 }
 .playergrid .square, .computergrid .square{
-border: solid black 1px;
+    
+border: solid rgb(255, 255, 255) 1px;
 padding: 10px;
 }
 
@@ -51,12 +71,14 @@ padding: 10px;
   display: flex;
   margin:30px;
   flex:1;
+  justify-content: space-evenly;
 }
 
 .ship{
     display: grid;
-    grid-template-columns: 100px;
-    grid-template-rows: repeat(5,100px);
+    grid-template-columns: 120px;
+    grid-template-rows: repeat(5,120px);
+    margin:40px 30px 0 auto;
 }
 
 .megaman{
@@ -64,14 +86,17 @@ padding: 10px;
     margin: 30px;
 }
 .megaman button{
-    padding:30px;
-    font-size: 25px;
+    padding:20px;
+    font-size: 20px;
     border-radius: 20px;
-    margin: 0px 35px;
+    margin: 20px 20px;
+    font-family: 'Press Start 2P', cursive , sans-serif;
+    background-color: black;
+    color: white;
 }
 
 .ship>div{
-    border: solid black 1px;
+    border: solid white 1px;
 }
 
 .highlight{
@@ -80,8 +105,13 @@ padding: 10px;
 .red{
     background-color: red;
 }
-
-
-.Commander-Ship{
-    background-image:url(./commander.png);
+.message{
+    color: white;
+    margin: 30px;
 }
+
+img{
+    z-index:1;
+    filter: drop-shadow(0 0 0.75rem crimson);
+}
+
